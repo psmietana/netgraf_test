@@ -7,7 +7,7 @@
     <title>Pets</title>
 </head>
 <body>
-<a class="btn btn-sm btn-success" href={{ route('posts.create') }}>Add Pet</a>
+<a class="btn btn-sm btn-success" href={{ route('pet.create') }}>Add Pet</a>
 <table>
     <thead>
     <tr>
@@ -23,11 +23,11 @@
             <tr>
                 <td>{{ $pet->name }}</td>
                 <td>
-                    <a href="{{ route('posts.edit', $pet->id) }}"
+                    <a href="{{ route('pet.edit', $pet->id) }}"
                        class="btn btn-primary btn-sm">Edit</a>
                 </td>
                 <td>
-                    <form action="{{ route('posts.destroy', $pet->id) }}" method="post">
+                    <form action="{{ route('pet.destroy', $pet->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
