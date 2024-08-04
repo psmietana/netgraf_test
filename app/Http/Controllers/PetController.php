@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Pet\Status;
-use App\Services\PetStoreApi;
+use App\Services\PetStoreManagerInterface;
 use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
     public function __construct(
-        protected PetStoreApi $petStoreApi,
+        protected PetStoreManagerInterface $petStoreManager,
     ) {}
 
     public function index()
     {
         return view('pet.index', [
-            'podcast' => $this->petStoreApi->getAll()
+            'podcast' => $this->petStoreManager->getAll()
         ]);
     }
 
@@ -28,7 +28,7 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
-        $this->petStoreApi->post();
+        $this->petStoreManager->post();
 
         return redirect()->route('pet.index');
     }
@@ -36,21 +36,21 @@ class PetController extends Controller
     public function edit(int $id)
     {
         return view('pet.edit', [
-            'pet' => $this->petStoreApi->getById($id),
+            'pet' => $this->petStoreManager->getById($id),
             'statuses' => Status::cases(),
         ]);
     }
 
     public function update(Request $request, string $id)
     {
-        $this->petStoreApi->put($id);
+        $this->petStoreManager->put($id);
 
         return redirect()->route('pet.index');
     }
 
     public function destroy(int $id)
     {
-        $this->petStoreApi->delete($id);
+        $this->petStoreManager->delete($id);
 
         return redirect()->route('pet.index');
     }

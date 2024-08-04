@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Enums\Pet\Status;
 use Illuminate\Support\Facades\Http;
 
-class PetStoreApi
+class PetStoreApiManager implements PetStoreManagerInterface
 {
     private const API_URL_PREFIX = 'pet';
 
@@ -37,6 +37,8 @@ class PetStoreApi
                 $statusesString,
             )
         );
+        var_dump($response->body());
+        die;
     }
 
     public function getById(int $id)
@@ -66,9 +68,10 @@ class PetStoreApi
 
     public function delete(int $id)
     {
-        $response = Http::delete(
-            $this->url,
-            ['petId' => $id, 'api_key' => $this->apiKey],
+        $response = Http::withHeaders([
+            'api_key' => $this->apiKey,
+        ])->delete(
+            sprintf('%s/%s', $this->url, $id)
         );
     }
 }

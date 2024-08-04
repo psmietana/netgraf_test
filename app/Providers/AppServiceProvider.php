@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\PetStoreApi;
+use App\Services\PetStoreApiManager;
+use App\Services\PetStoreManagerInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,8 +14,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(PetStoreApi::class, function (Application $app) {
-            return new PetStoreApi(
+        $this->app->bind(
+            PetStoreManagerInterface::class,
+            PetStoreApiManager::class
+        );
+
+        $this->app->singleton(PetStoreApiManager::class, function (Application $app) {
+            return new PetStoreApiManager(
                 config('services.petstore.url'),
                 config('services.petstore.api-key')
             );
