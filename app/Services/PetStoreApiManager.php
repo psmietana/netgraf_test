@@ -87,21 +87,25 @@ class PetStoreApiManager implements PetStoreManagerInterface
 
     public function mapArrayToPetModel(array $input): Pet
     {
-        $category = isset($input['category'])
+        $category = isset($input['category'], $input['category']['id'], $input['category']['name'])
             ? new Category($input['category']['id'], $input['category']['name'])
             : null;
+
+        $tags = [];
         if (isset($input['tags'])) {
-            $tags = [];
             foreach ($input['tags'] as $tag) {
-                $tags[] = new Tag($tag['id'], $tag['name']);
+                $tags[] = isset($tag['id'], $tag['name'])
+                    ? new Tag($tag['id'], $tag['name'])
+                    : null;
             }
         }
 
         return new Pet(
             $input['id'],
             $category ?? null,
+            $input['name'],
             $input['photoUrls'] ?? '',
-            $tags ?? null,
+            $tags ? array_filter($tags) : null,
             Status::from($input['status']),
         );
     }

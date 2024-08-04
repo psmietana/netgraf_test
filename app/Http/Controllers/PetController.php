@@ -15,7 +15,7 @@ class PetController extends Controller
     public function index()
     {
         return view('pet.index', [
-            'podcast' => $this->petStoreManager->getAll()
+            'pets' => $this->petStoreManager->getAll()
         ]);
     }
 

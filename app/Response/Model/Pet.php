@@ -9,6 +9,7 @@ class Pet
     public function __construct(
         private int $id,
         private ?Category $category,
+        private string $name,
         private array $photoUrls,
         private ?array $tags,
         private ?Status $status,
@@ -43,5 +44,10 @@ class Pet
     public function getTags(): ?array
     {
         return $this->tags;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

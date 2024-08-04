@@ -7,7 +7,7 @@
     <title>Add Pet</title>
 </head>
 <body>
-    <form method="POST" action="/pet/store/{{$contact->id}}">
+    <form method="POST" action="/pet/{{$contact->id}}/update">
         @csrf
         <div class="form-group mb-2">
             <label for="exampleInputEmail1">Email address</label>
