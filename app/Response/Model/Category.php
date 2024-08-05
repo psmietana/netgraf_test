@@ -5,8 +5,8 @@ namespace App\Response\Model;
 class Category
 {
     public function __construct(
-        private int $id,
-        private string $name,
+        private readonly int $id,
+        private readonly string $name,
     ) {}
 
     public function getId(): int

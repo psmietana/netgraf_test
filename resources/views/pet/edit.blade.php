@@ -7,21 +7,35 @@
     <title>Add Pet</title>
 </head>
 <body>
-    <form method="POST" action="/pet/{{$contact->id}}/update">
-        @csrf
-        <div class="form-group mb-2">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{$contact->email}}">
-        </div>
-        <div class="form-group mb-2">
-            <label for="exampleInputPassword1">Phone Number</label>
-            <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{$contact->phone}}">
-        </div>
-        <div class="form-group mb-2">
-            <label for="exampleInputPassword1">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Name" value="{{$contact->name}}">
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+<form method="POST" action="{{ route('pet.update', ['id' => $pet->getId()]) }}">
+    @csrf
+    @method('PUT')
+    <div>
+        <label>Name</label>
+        <input type="text" name="email" placeholder="Enter name">
+    </div>
+    <div>
+        <label>Category</label>
+        <input type="text" name="category" placeholder="Enter category name">
+    </div>
+    <div>
+        <label>Photo Urls separated by commas</label>
+        <input type="text" class="form-control" name="photoUrls" placeholder="https://...,https://...,https://">
+    </div>
+    <div>
+        <label>Tags separated by commas</label>
+        <input type="text" class="form-control" name="tags" placeholder="tag1,tag2,tag3">
+    </div>
+    <fieldset>
+        <legend>Choose status:</legend>
+        @foreach($statuses as $status)
+            <div>
+                <input type="radio" id="{{ $status->value }}" name="status" value="{{ $status->value }}"/>
+                <label for="{{ $status->value }}" style="text-transform: capitalize;">{{ $status->value }}</label>
+            </div>
+        @endforeach
+    </fieldset>
+    <input type="submit" value="Save" />
+</form>
 </body>
 </html>

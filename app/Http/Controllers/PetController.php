@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Pet\Status;
+use App\Http\Request\Model\PetModel;
 use App\Services\PetStoreManagerInterface;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,13 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
-        $this->petStoreManager->post();
+        $this->petStoreManager->post(new PetModel(
+            $request->input('name'),
+            $request->input('category'),
+            $request->input('photoUrls'),
+            $request->input('tags'),
+            $request->input('status'),
+        ));
 
         return redirect()->route('pet.index');
     }
@@ -43,7 +50,13 @@ class PetController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $this->petStoreManager->put($id);
+        $this->petStoreManager->put(new PetModel(
+            $request->input('name'),
+            $request->input('category'),
+            $request->input('photoUrls'),
+            $request->input('tags'),
+            $request->input('status'),
+        ));
 
         return redirect()->route('pet.index');
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Response\Model;
+namespace App\Http\Request\Model;
 
-class Tag
+class CategoryModel
 {
     public function __construct(
         private readonly int $id,

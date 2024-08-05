@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Enums\Pet\Status;
-use App\Response\Model\Category;
+use App\Http\Request\Model\PetModel;
+use App\Response\Model\CategoryModel;
 use App\Response\Model\Pet;
 use App\Response\Model\Tag;
 use Illuminate\Support\Facades\Http;
@@ -62,14 +63,16 @@ class PetStoreApiManager implements PetStoreManagerInterface
         );
     }
 
-    public function post()
+    public function post(PetModel $petModel): void
     {
+        var_dump($petModel);
+        die;
         $response = Http::post(
             $this->url,
         );
     }
 
-    public function put(int $id)
+    public function put(PetModel $petModel): void
     {
         $response = Http::put(
             $this->url,
@@ -88,7 +91,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
     public function mapArrayToPetModel(array $input): Pet
     {
         $category = isset($input['category'], $input['category']['id'], $input['category']['name'])
-            ? new Category($input['category']['id'], $input['category']['name'])
+            ? new CategoryModel($input['category']['id'], $input['category']['name'])
             : null;
 
         $tags = [];

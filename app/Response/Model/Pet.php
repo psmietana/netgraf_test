@@ -7,12 +7,12 @@ use App\Enums\Pet\Status;
 class Pet
 {
     public function __construct(
-        private int $id,
+        private int            $id,
         private ?Category $category,
-        private string $name,
-        private array $photoUrls,
-        private ?array $tags,
-        private ?Status $status,
+        private string         $name,
+        private array          $photoUrls,
+        private ?array         $tags,
+        private ?Status        $status,
     ) {}
 
     public function getId(): int

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Request\Model\PetModel;
 use App\Response\Model\Pet;
 
 interface PetStoreManagerInterface
@@ -10,9 +11,9 @@ interface PetStoreManagerInterface
 
     public function getById(int $id): Pet;
 
-    public function post();
+    public function post(PetModel $petModel): void;
 
-    public function put(int $id);
+    public function put(PetModel $petModel): void;
 
     public function delete(int $id);
 }
