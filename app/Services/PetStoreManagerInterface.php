@@ -15,5 +15,5 @@ interface PetStoreManagerInterface
 
     public function put(PetModel $petModel): void;
 
-    public function delete(int $id);
+    public function delete(int $id): void;
 }

@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Enums\Pet\Status;
 use App\Http\Request\Model\PetModel;
-use App\Response\Model\CategoryModel;
+use App\Response\Model\Category;
 use App\Response\Model\Pet;
 use App\Response\Model\Tag;
+use Dropelikeit\LaravelJmsSerializer\Http\Responses\ResponseFactory;
 use Illuminate\Support\Facades\Http;
 
 class PetStoreApiManager implements PetStoreManagerInterface
@@ -16,6 +17,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
     private string $url;
 
     public function __construct(
+        private readonly ResponseFactory $responseFactory,
         private readonly string $apiUrl,
         private readonly string $apiKey,
     ) {
@@ -65,7 +67,8 @@ class PetStoreApiManager implements PetStoreManagerInterface
 
     public function post(PetModel $petModel): void
     {
-        var_dump($petModel);
+        $x = $this->responseFactory->create($petModel);
+        var_dump($x->getContent());
         die;
         $response = Http::post(
             $this->url,
@@ -79,7 +82,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
         );
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $response = Http::withHeaders([
             'api_key' => $this->apiKey,
@@ -91,7 +94,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
     public function mapArrayToPetModel(array $input): Pet
     {
         $category = isset($input['category'], $input['category']['id'], $input['category']['name'])
-            ? new CategoryModel($input['category']['id'], $input['category']['name'])
+            ? new Category($input['category']['id'], $input['category']['name'])
             : null;
 
         $tags = [];

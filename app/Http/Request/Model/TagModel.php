@@ -5,7 +5,9 @@ namespace App\Http\Request\Model;
 class TagModel
 {
     public function __construct(
+        /** @Serializer\Type('int') */
         private readonly int $id,
+        /** @Serializer\Type('string') */
         private readonly string $name,
     ) {}
 

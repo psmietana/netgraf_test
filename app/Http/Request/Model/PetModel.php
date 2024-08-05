@@ -6,11 +6,27 @@ use App\Enums\Pet\Status;
 
 class PetModel
 {
+    /**
+     * @Serializer\Type(CategoryModel::class)
+     **/
     private ?CategoryModel $category;
+
+    /**
+     * @Serializer\Type(array<string>)
+     **/
     private ?array $photoUrls;
+
+    /**
+     * @Serializer\Type(array<TagModel::class>)
+     **/
     private array $tags;
+
+    /**
+     * @Serializer\Type(Status::class)
+     **/
     private ?Status $status;
     public function __construct(
+        /** @Serializer\Type('string') */
         private readonly ?string $name,
         ?string $categoryName,
         ?string $photoUrls,
