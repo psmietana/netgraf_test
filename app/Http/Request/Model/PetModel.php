@@ -62,9 +62,9 @@ class PetModel
         return $this->tags;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?string
     {
-        return $this->status;
+        return $this->status ? $this->status->value : null;
     }
 
     private function convertTagsToModels(?string $tags): array

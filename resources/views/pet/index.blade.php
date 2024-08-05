@@ -7,6 +7,16 @@
     <title>Pets</title>
 </head>
 <body>
+@if (session()->has('success'))
+    <div>
+        {{ session('success') }}
+    </div>
+@endif
+@if (session()->has('error'))
+    <div>
+        {{ session('error') }}
+    </div>
+@endif
 <a class="btn btn-sm btn-success" href={{ route('pet.create') }}>Add Pet</a>
 <table>
     <thead>

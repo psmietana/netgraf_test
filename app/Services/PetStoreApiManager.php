@@ -64,7 +64,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
             )
         );
         if ($response->failed()) {
-            throw new PetApiException('Something went wrong');
+            throw new PetApiException($response->reason());
         }
 
         return $this->mapArrayToPetModel(
@@ -77,10 +77,10 @@ class PetStoreApiManager implements PetStoreManagerInterface
         $serialized = $this->serializedResponseFactory->create($petModel);
         $response = Http::post(
             $this->url,
-            json_decode($serialized->getContent(), true),
+            $serialized->getContent(),
         );
         if ($response->failed()) {
-            throw new PetApiException('Something went wrong');
+            throw new PetApiException($response->reason());
         }
     }
 
@@ -89,10 +89,10 @@ class PetStoreApiManager implements PetStoreManagerInterface
         $serialized = $this->serializedResponseFactory->create($petModel);
         $response = Http::put(
             $this->url,
-            json_decode($serialized->getContent(), true),
+            $serialized->getContent(),
         );
         if ($response->failed()) {
-            throw new PetApiException('Something went wrong');
+            throw new PetApiException($response->reason());
         }
     }
 
@@ -104,7 +104,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
             sprintf('%s/%s', $this->url, $id)
         );
         if ($response->failed()) {
-            throw new PetApiException('Something went wrong');
+            throw new PetApiException($response->reason());
         }
     }
 

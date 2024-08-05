@@ -7,7 +7,7 @@
     <title>Add Pet</title>
 </head>
 <body>
-<form method="POST" action="{{ route('pet.update', ['id' => $pet->getId()]) }}">
+<form method="POST" action="{{ route('pet.update', ['pet' => $pet->getId()]) }}">
     @csrf
     @method('PUT')
     <div>
