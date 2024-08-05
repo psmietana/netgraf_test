@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\Pet\Status;
+use App\Exceptions\Pet\PetApiException;
 use App\Http\Request\Model\PetModel;
 use App\Response\Model\Category;
 use App\Response\Model\Pet;
@@ -17,7 +18,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
     private string $url;
 
     public function __construct(
-        private readonly ResponseFactory $responseFactory,
+        private readonly ResponseFactory $serializedResponseFactory,
         private readonly string $apiUrl,
         private readonly string $apiKey,
     ) {
@@ -43,6 +44,9 @@ class PetStoreApiManager implements PetStoreManagerInterface
                 $statusesString,
             )
         );
+        if ($response->failed()) {
+            throw new PetApiException('Something went wrong');
+        }
 
         return array_map(
             [PetStoreApiManager::class, 'mapArrayToPetModel'],
@@ -59,6 +63,9 @@ class PetStoreApiManager implements PetStoreManagerInterface
                 $id,
             )
         );
+        if ($response->failed()) {
+            throw new PetApiException('Something went wrong');
+        }
 
         return $this->mapArrayToPetModel(
             json_decode($response->body(), true)
@@ -67,19 +74,26 @@ class PetStoreApiManager implements PetStoreManagerInterface
 
     public function post(PetModel $petModel): void
     {
-        $x = $this->responseFactory->create($petModel);
-        var_dump($x->getContent());
-        die;
+        $serialized = $this->serializedResponseFactory->create($petModel);
         $response = Http::post(
             $this->url,
+            json_decode($serialized->getContent(), true),
         );
+        if ($response->failed()) {
+            throw new PetApiException('Something went wrong');
+        }
     }
 
     public function put(PetModel $petModel): void
     {
+        $serialized = $this->serializedResponseFactory->create($petModel);
         $response = Http::put(
             $this->url,
+            json_decode($serialized->getContent(), true),
         );
+        if ($response->failed()) {
+            throw new PetApiException('Something went wrong');
+        }
     }
 
     public function delete(int $id): void
@@ -89,6 +103,9 @@ class PetStoreApiManager implements PetStoreManagerInterface
         ])->delete(
             sprintf('%s/%s', $this->url, $id)
         );
+        if ($response->failed()) {
+            throw new PetApiException('Something went wrong');
+        }
     }
 
     public function mapArrayToPetModel(array $input): Pet
