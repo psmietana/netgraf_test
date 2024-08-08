@@ -26,7 +26,7 @@ class PetModel
     private array $tags;
 
     /**
-     * @Serializer\Type(Status::class)
+     * @Serializer\Type('string')
      * @Serializer\Accessor(getter="getStatus"))
      **/
     private ?Status $status;
@@ -71,7 +71,6 @@ class PetModel
 
     public function getStatus(): ?string
     {
-        var_dump('111');
         return $this->status?->value;
     }
 
