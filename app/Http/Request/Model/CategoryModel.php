@@ -2,6 +2,8 @@
 
 namespace App\Http\Request\Model;
 
+use JMS\Serializer\Annotation as Serializer;
+
 class CategoryModel
 {
     public function __construct(

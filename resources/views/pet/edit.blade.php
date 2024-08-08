@@ -11,6 +11,10 @@
     @csrf
     @method('PUT')
     <div>
+        <label>ID</label>
+        <input type="number" name="id" placeholder="Enter ID" min="1">
+    </div>
+    <div>
         <label>Name</label>
         <input type="text" name="email" placeholder="Enter name">
     </div>

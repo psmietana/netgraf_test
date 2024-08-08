@@ -3,7 +3,11 @@
 namespace App\Http\Request\Model;
 
 use App\Enums\Pet\Status;
+use JMS\Serializer\Annotation as Serializer;
 
+/**
+ * @Serializer\ExclusionPolicy("all")
+ */
 class PetModel
 {
     /**
@@ -23,15 +27,18 @@ class PetModel
 
     /**
      * @Serializer\Type(Status::class)
+     * @Serializer\Accessor(getter="getStatus"))
      **/
     private ?Status $status;
     public function __construct(
+        /** @Serializer\Type('int') */
+        private readonly int     $id,
         /** @Serializer\Type('string') */
         private readonly ?string $name,
-        ?string $categoryName,
-        ?string $photoUrls,
-        ?string $tags,
-        ?string $status,
+        ?string                  $categoryName,
+        ?string                  $photoUrls,
+        ?string                  $tags,
+        ?string                  $status,
     ) {
         $this->category = $categoryName ? new CategoryModel(0, $categoryName) : null;
         $this->photoUrls = $photoUrls ? explode(',', $photoUrls) : null;
@@ -64,7 +71,13 @@ class PetModel
 
     public function getStatus(): ?string
     {
-        return $this->status ? $this->status->value : null;
+        var_dump('111');
+        return $this->status?->value;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     private function convertTagsToModels(?string $tags): array

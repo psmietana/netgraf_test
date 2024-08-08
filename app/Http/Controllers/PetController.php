@@ -32,6 +32,7 @@ class PetController extends Controller
     {
         try {
             $this->petStoreManager->post(new PetModel(
+                $request->input('id'),
                 $request->input('name'),
                 $request->input('category'),
                 $request->input('photoUrls'),
@@ -66,6 +67,7 @@ class PetController extends Controller
     {
         try {
             $this->petStoreManager->put(new PetModel(
+                $request->input('id'),
                 $request->input('name'),
                 $request->input('category'),
                 $request->input('photoUrls'),

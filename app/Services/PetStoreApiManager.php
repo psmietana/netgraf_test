@@ -126,7 +126,7 @@ class PetStoreApiManager implements PetStoreManagerInterface
         return new Pet(
             $input['id'],
             $category ?? null,
-            $input['name'],
+            $input['name'] ?? '',
             $input['photoUrls'] ?? '',
             $tags ? array_filter($tags) : null,
             Status::from($input['status']),

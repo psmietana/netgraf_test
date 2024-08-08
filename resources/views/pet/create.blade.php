@@ -10,6 +10,10 @@
     <form method="POST" action="{{ route('pet.store') }}">
         @csrf
         <div>
+            <label>ID</label>
+            <input type="number" name="id" placeholder="Enter ID" min="1">
+        </div>
+        <div>
             <label>Name</label>
             <input type="text" name="name" placeholder="Enter name">
         </div>
